@@ -1,0 +1,23 @@
+---
+ - name: To test my ansible
+   hosts: git
+   gather_facts: true
+   become: true
+   become_user: arun
+   tasks:
+
+     - name: To check server uptime
+       command: uptime
+       register: p1
+     - debug: var=p1.stdout
+
+     - name: To check kernel version
+       shell: "uname -r"
+       register: p2
+     - debug: var=p2.stdout
+
+     - name: To ensure chrony package installed
+       yum: name=chrony state=present
+
+     - name: To ensure ntp service status
+       service: name=chronyd state=started

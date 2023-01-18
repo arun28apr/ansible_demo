@@ -21,3 +21,6 @@
 
      - name: To ensure ntp service status
        service: name=chronyd state=started
+
+     - name: To ensure http service status
+       service: name=httpd state=started

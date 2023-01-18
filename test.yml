@@ -1,0 +1,20 @@
+---
+ - name: Testing
+   hosts: localhost
+   tasks:
+    - name: To check server uptime
+      command: uptime
+      register: output
+    - debug: var=output.stdout_lines
+
+    - name: To check kernel version
+      command: "uname -r"
+      register: p1
+    - debug: var=p1
+
+    - name: To install http service
+      yum:
+       name: httpd
+       state: latest
+      register: p2
+    - debug: var=p2.results

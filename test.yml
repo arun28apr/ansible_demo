@@ -1,6 +1,6 @@
 ---
  - name: To test my ansible
-   hosts: git
+   hosts: git_node
    gather_facts: true
    become: true
    become_user: arun

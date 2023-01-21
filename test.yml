@@ -30,27 +30,36 @@
        yum: name=httpd state=latest
        register: p5
      - debug: var=p5
+       notify:
+         - start http
+         - configure firewalld
        tags:
          - hello
-
-     - name: To ensure http service started
+     
+     - name: copy the index file
+       copy: src=/git dest=/var/www/html
+       
+   handlers:
+     - name: start http
        service: name=httpd state=started
        register: p6
      - debug: var=p6.state
        tags:
          - hello0
-
-     - name: To stop the http service
-       service: name=httpd state=stopped
+     
+     #- name: configure firewalld
+       #firewalld: firewalld state=stopped
+     #- name: To stop the http service
+       #service: name=httpd state=stopped
       # register: p7
      #- debug: var=p7
-       tags:
-         - hello1
+       #tags:
+         #- hello1
 
-     - name: To uninstall http service
-       yum: name=httpd state=absent
-       register: p8
-     - debug: var=p8.state
+     #- name: To uninstall http service
+       #yum: name=httpd state=absent
+       #register: p8
+     #- debug: var=p8.state
 
 
 

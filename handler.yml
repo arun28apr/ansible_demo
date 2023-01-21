@@ -1,6 +1,6 @@
 ---
  - name: To check handler module
-   hosts:
+   hosts: git_node
    become: true
    tasks:
     
@@ -8,8 +8,8 @@
        command: echo "restart the services"
        notify: "restart the service"
 
-     handlers:
-       - name: restarting rsyslog
-         service: name=rsyslog state=restarted
-         register: result_1
-       - debug: result_1
+   handlers:
+     - name: restart the service
+       service: name=sshd state=restarted
+       register: p6
+     - debug: var=p6

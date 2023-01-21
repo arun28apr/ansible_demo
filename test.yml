@@ -24,15 +24,33 @@
      - name: To ensure ntp service status
        service: name=chronyd state=started
        register: p4
-     - debug: var=p4.state
+     - debug: var=p4
 
      - name: To install http service
        yum: name=httpd state=latest
        register: p5
-     - debug: var=p5.state
+     - debug: var=p5
+       tags:
+         - hello
 
-     - name: To ensure http service status
+     - name: To ensure http service started
        service: name=httpd state=started
        register: p6
      - debug: var=p6.state
+       tags:
+         - hello0
+
+     - name: To stop the http service
+       service: name=httpd state=stopped
+      # register: p7
+     #- debug: var=p7
+       tags:
+         - hello1
+
+     - name: To uninstall http service
+       yum: name=httpd state=absent
+       register: p8
+     - debug: var=p8.state
+
+
 

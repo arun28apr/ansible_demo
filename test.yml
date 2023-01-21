@@ -19,20 +19,20 @@
      - name: To ensure chrony package installed
        yum: name=chrony state=present
        register: p3
-     - debug: var=p3.stdout
+     - debug: var=p3.state
 
      - name: To ensure ntp service status
        service: name=chronyd state=started
        register: p4
-     - debug: var=p4.stdout
+     - debug: var=p4.state
 
      - name: To install http service
        yum: name=httpd state=latest
        register: p5
-     - debug: var=p5.stdout
+     - debug: var=p5.state
 
      - name: To ensure http service status
        service: name=httpd state=started
        register: p6
-     - debug: var=p6.stdout
+     - debug: var=p6.state
 

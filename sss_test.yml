@@ -1,0 +1,23 @@
+---
+ - name: Going to create an user
+   hosts: git_node
+   tasks:
+     
+     - name: Going to create an user bhuvi
+       user:
+         name: bhuvi
+         comment: test_user
+         shell: /bin/bash
+   
+     - name: adding user in sudoers
+       lineinfile:
+         path: /etc/sudoers
+         line: "bhuvi ALL=(ALL) ALL"
+       notify:
+         - restart sshd
+     
+    handlers:
+      - name: restart sshd
+        service: name=sshd state=restarted
+        register: result
+      - debug: var=result

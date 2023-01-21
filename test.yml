@@ -30,14 +30,16 @@
        yum: name=httpd state=latest
        register: p5
      - debug: var=p5
-       notify:
-         - start http
-         - configure firewalld
+       #notify:
+         #- start http
+         #- configure firewalld
        tags:
          - hello
      
      - name: copy the index file
-       copy: src=/git dest=/var/www/html
+       copy: src=/root/git/ansible_demo/index.html dest=/var/www/html
+       notify:
+         - start http
        
    handlers:
      - name: start http

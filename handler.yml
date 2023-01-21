@@ -1,0 +1,15 @@
+---
+ - name: To check handler module
+   hosts:
+   become: true
+   tasks:
+    
+     - name: going to check handler now
+       command: echo "restart the services"
+       notify: "restart the service"
+
+     handlers:
+       - name: restarting rsyslog
+         service: name=rsyslog state=restarted
+         register: result_1
+       - debug: result_1

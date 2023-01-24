@@ -1,0 +1,32 @@
+---
+- name: To configure the server
+  hosts: web_node
+  tasks:
+    - name: To check server uptime
+      command: uptime
+      register: p1
+    - debug: var=p1.stdout
+
+    - name: To check kernel version
+      shell: "uname -r;cat /etc/redhat-release"
+      register: p2
+    - debug: var=p2
+
+    - name: To create an user
+      user:
+         name: arun
+         comment: arun
+         shell: /bin/bash
+
+    - name: Adding an user into sudoers
+      lineinfile:
+        line: "arun ALL=(ALL) ALL"
+        path: /etc/sudoers
+      notify:
+        - restart ssh
+
+  handlers:
+    - name: restart ssh
+      service: name=sshd state=restarted
+      register: result
+    - debug: var=result

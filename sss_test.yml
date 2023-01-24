@@ -16,8 +16,8 @@
        notify:
          - restart sshd
      
-    handlers:
-      - name: restart sshd
-        service: name=sshd state=restarted
-        register: result
-      - debug: var=result
+   handlers:
+     - name: restart sshd
+       service: name=sshd state=restarted
+       register: result
+     - debug: var=result

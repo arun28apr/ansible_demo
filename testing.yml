@@ -4,4 +4,6 @@
    tasks:
      - name: to copy index file
        copy: src=/root/git/ansible_demo/index.html dest=/var/www/html
+       notify:
+
 

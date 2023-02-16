@@ -1,0 +1,29 @@
+---
+ - name: Gonna test vars
+   hosts: localhost
+   connection: local
+   become: true
+   vars:
+     web: httpd
+     time: ntpd
+     log: sshd 
+   tasks:
+     - name: To modify the http conf
+       lineinfile:
+         path: /etc/httpd/conf/httpd.conf
+         regexp: '^Listen'
+         line: Listen 8080
+       notify:
+         - restart http
+     - name: To display http config file
+       shell: "cat /etc/httpd/conf/httpd.conf |grep -i ^listen"
+       register: p1
+     - debug: var=p1
+
+   handlers:
+      - name: restart http
+        service: name=httpd state=restarted
+        register: result
+      - debug: var=result.state
+
+

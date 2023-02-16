@@ -1,0 +1,15 @@
+---
+ - name: Gonna test vars
+   hosts: localhost
+   connection: local
+   become: true
+   tasks:
+     - name: Gather
+       shell:
+         cmd: yum check-update --security| grep 'Security:'
+         warn: false
+       register: result
+       ignore_errors: true
+       changed_when: false
+       failed_when: result.rc !=0
+     - debug: var=result.stdout_lines
